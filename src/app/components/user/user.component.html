@@ -1,0 +1,15 @@
+<div *ngFor="let user of users" class="row">
+  <div class="col-sm-6">
+    <div
+      class="card bg-light border-primary mb-3"
+      style="width: 18rem"
+      *ngIf="user.status == true"
+    >
+      <div class="card-body">
+        <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
+        <h6 class="card-subtitle mb-2">{{ user.email }}</h6>
+        <p class="card-text"></p>
+      </div>
+    </div>
+  </div>
+</div>

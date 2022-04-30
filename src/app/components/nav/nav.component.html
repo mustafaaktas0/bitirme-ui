@@ -1,0 +1,94 @@
+<div class="container">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+  >
+    <a
+      href="/"
+      class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+    >
+    </a>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li>
+        <a
+          [routerLink]="['/']"
+          routerLinkActive="router-link-active"
+          class="nav-link px-2 link-dark"
+          >Anasayfa</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/car']"
+          routerLinkActive="router-link-active"
+          class="nav-link px-2 link-dark"
+          >Arabalarımız</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/brand']"
+          routerLinkActive="router-link-active"
+          class="nav-link px-2 link-dark"
+          >Markalarımız</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/color']"
+          routerLinkActive="router-link-active"
+          class="nav-link px-2 link-dark"
+          >Renkler</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="['/about']"
+          routerLinkActive="router-link-active"
+          class="nav-link px-2 link-dark"
+          >Hakkımızda</a
+        >
+      </li>
+    </ul>
+
+    <div class="col-md-3 text-end">
+      <div *ngIf="!controlAuthentication()">
+        <button
+          type="button"
+          class="btn btn-outline-primary me-2"
+          [routerLink]="['/login']"
+        >
+          Giriş Yap
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [routerLink]="['/register']"
+        >
+          Üye Ol
+        </button>
+      </div>
+      <div *ngIf="controlAuthentication()">
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-primary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Hoşgeldin, {{ fullName }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <a class="dropdown-item" routerLink="/users/update/{{ userId }}"
+                >Profil</a
+              >
+            </li>
+            <li><a class="dropdown-item" (click)="logout()">Çıkış yap</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>

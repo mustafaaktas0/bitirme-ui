@@ -1,0 +1,201 @@
+<div class="mb-5 me-4">
+  <div class="row">
+    <div class="col">
+      <button type="button" routerLink="/cars/add" class="btn btn-success">
+        Ekle
+      </button>
+    </div>
+    <div class="col col-7">
+      <input
+        type="text"
+        [(ngModel)]="filterText"
+        class="form-control"
+        id="filterText"
+        placeholder="Arama..."
+      />
+    </div>
+    <div class="col">
+      <div class="dropdown" *ngIf="colorSelected == ''; else elseBlockForColor">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenu3"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Renk
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+          <li *ngFor="let color of colors">
+            <button
+              (click)="currentColor(color)"
+              class="dropdown-item"
+              type="button"
+            >
+              {{ color.colorName }}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <ng-template #elseBlockForColor>
+        <div class="dropdown">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="dropdownMenu4"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ colorSelected }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+            <li *ngFor="let color of colors">
+              <button
+                (click)="currentColor(color)"
+                class="dropdown-item"
+                type="button"
+              >
+                {{ color.colorName }}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+    <div class="col">
+      <div class="dropdown" *ngIf="brandSelected == ''; else elseBlockForBrand">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenu2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Marka
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <li *ngFor="let brand of brands">
+            <button
+              (click)="currentBrand(brand)"
+              class="dropdown-item"
+              type="button"
+            >
+              {{ brand.brandName }}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <ng-template #elseBlockForBrand>
+        <div class="dropdown">
+          <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            id="dropdownMenu2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ brandSelected }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li *ngFor="let brand of brands">
+              <button
+                (click)="currentBrand(brand)"
+                class="dropdown-item"
+                type="button"
+              >
+                {{ brand.brandName }}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+    <div class="col">
+      <button type="button" (click)="setFilter()" class="btn btn-success">
+        Filtrele
+      </button>
+    </div>
+    <div class="col-sm-1">
+      <button type="button" (click)="setClear()" class="btn btn-danger">
+        Temizle
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="filterText.length > 1" class="alert alert-success">
+  Şunu aradınız {{ filterText }}
+</div>
+
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-primary"
+  role="status"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="row">
+  <div
+    class="card col-md-3 mb-3 mx-3 pt-3 px-3 text-center"
+    style="width: 18rem"
+    *ngFor="
+      let car of cars
+        | filterCarDetailPipe: filterText
+        | filterColorBrandPipe: filterBrandColor
+    "
+  >
+    <img
+      class="card-img-top"
+      src="{{ getCarImageById(car.carId) }}"
+      alt="{{ imagePath }}"
+    />
+    <div class="card-body">
+      <h2 class="card-title h4 mb-3">{{ car.brandName }}</h2>
+      <div class="row mb-3">
+        <div class="col-6">
+          <p class="card-text text-black-50">
+            <b>Renk: </b>{{ car.colorName }}
+          </p>
+        </div>
+        <div class="col-6">
+          <p class="card-text text-black-50">
+            <b>Model Yılı: </b>{{ car.modelYear }}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <p class="card-text text-black-50">
+            <b>Fiyat: </b>{{ car.dailyPrice | currency: "₺" }}
+          </p>
+        </div>
+        <div class="col-6">
+          <p class="card-text text-black-50">
+            <b>Açıklama: </b>{{ car.descriptions }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent text-end py-3">
+      <div class="row">
+        <div class="btn-group">
+          <button
+            type="button"
+            routerLink="/car/update/{{ car.carId }}"
+            class="btn btn-sm btn-success"
+          >
+            Düzenle
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            routerLink="/car/rent/{{ car.carId }}"
+          >
+            Kirala
+          </button>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col">
+    <div class="col">
+      <button type="button" routerLink="/brands/add" class="btn btn-success">
+        Ekle
+      </button>
+    </div>
+  </div>
+  <div class="col-md-11">
+    <div class="mb-3">
+      <input
+        type="text"
+        [(ngModel)]="filterText"
+        class="form-control"
+        id="filterText"
+        placeholder="Arama..."
+      />
+    </div>
+  </div>
+</div>
+
+<div *ngIf="filterText.length > 1" class="alert alert-success">
+  Şunu aradınız {{ filterText }}
+</div>
+
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-primary"
+  role="status"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="row">
+  <div
+    *ngFor="let brand of brands | filterBrandPipe: filterText"
+    class="card text-dark border-primary mb-3 mx-2 col-md-4"
+    style="max-width: 10.7rem"
+  >
+    <div
+      class="card-body mx-2 text-center"
+      routerLink="/cars/brand/{{ brand.id }}"
+    >
+      {{ brand.brandName }}
+    </div>
+    <div class="card-footer bg-transparent btn-group">
+      <button
+        class="btn btn-sm btn-outline-primary"
+        routerLink="/brands/update/{{ brand.id }}"
+      >
+        Güncelle
+      </button>
+      <button class="btn btn-sm btn-outline-danger" (click)="delete(brand)">
+        Sil
+      </button>
+    </div>
+  </div>
+</div>
